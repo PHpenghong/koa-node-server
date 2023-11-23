@@ -1,17 +1,22 @@
+const Router = require('koa-router')
+
+const router = new Router()
 // const requestProxy = require('../server/request/request')
-const { reqAll, allFn, reqLock } = require('../server/request/index')
+const { reqAll, request, reqLock } = require('../server/request/index')
 
 const api = process.env.BASEURL_API
 
-const test = async (ctx) => {
+router.get('/test', async (ctx) => {
   try {
+    console.log('in-----=')
     const config = {
       method: 'GET',
       url: `${api}/api/test`
       // headers: ctx.headers
     }
-    // const res = await reqLock(config)
-    // console.log('🚀 ~ file: test.js:14 ~ test ~ res:', res)
+    // const res = await request(config)
+    // const fn = reqLock(config, request, { exec: false, execFn: false })
+    // const res = await fn()
 
     const configs = [
       config,
@@ -20,7 +25,12 @@ const test = async (ctx) => {
         url: `${api}/api/req`
       }
     ]
-    const res = await reqAll(configs.map((c) => allFn(reqLock(c, false))))
+    const fns = configs.map((c) =>
+      reqLock(c, request, { exec: false, execFn: false })
+    )
+    console.log('in=======fns', fns)
+    const res = await reqAll(fns)
+    console.log('🚀 ~ file: test.js:28 ~ test ~ res:', res)
     ctx.status = 200
     ctx.body = {
       val: 'hello',
@@ -30,8 +40,6 @@ const test = async (ctx) => {
     ctx.status = error.status
     ctx.body = error.data
   }
-}
+})
 
-module.exports = {
-  test
-}
+module.exports = router

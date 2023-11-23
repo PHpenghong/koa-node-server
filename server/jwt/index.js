@@ -77,6 +77,7 @@ const verifyToken = (whiteUrl, userInfo = 'userInfo') => {
 
       await next()
     } catch (err) {
+      console.log('🚀 ~ file: index.js:80 ~ jwtMiddleware ~ err:', err)
       ctx.status = 401
       ctx.body = { error: '登录过期，请重新登录' }
     }

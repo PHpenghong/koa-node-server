@@ -1,5 +1,7 @@
 require('./utils/global')
 
+global.redisClient = require('./db/redis')
+
 const dealWithProt = (port) => {
   let res = 3000
   try {
@@ -24,6 +26,12 @@ module.exports = function (portVal = 3000) {
   const koaLogger = require('koa-logger')
   const { verifyToken } = require('./jwt/index')
   const { whileUrlJWT } = require('./utils/whileUrl')
+
+  // 全局错误处理中间件
+  koa.on('error', (err) => {
+    console.error('Global error handler:', err.message)
+    // 这里可以进行全局错误处理
+  })
 
   // 配置控制台日志中间件
   koa.use(koaLogger())

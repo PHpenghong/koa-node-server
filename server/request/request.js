@@ -16,8 +16,19 @@ request.interceptors.response.use(
     if (status === 200) {
       return data
     }
-    return Promise.reject(response)
+    return Promise.reject({
+      status,
+      data,
+      response
+    })
   },
-  (error) => Promise.reject(error)
+  (error) => {
+    const { data, status } = error
+    return Promise.reject({
+      status,
+      data,
+      response: error
+    })
+  }
 )
 module.exports = request

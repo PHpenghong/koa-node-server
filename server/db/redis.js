@@ -19,3 +19,26 @@ client.on('error', function (err) {
 client.connect()
 
 module.exports = client
+
+/**
+ * 新增
+ * redisClient.set('key', 'value');
+ *
+ * redisClient.setex('key', 60, 'value'); // 过期时间为60秒
+ *
+ * 删除
+ * redisClient.del('key');
+ *
+ * 更新
+ * redisClient.set('key', 'newValue');
+ *
+ * 获取
+ * redisClient.get('key');
+ *
+ * 验证是否过期
+ * redisClient.exists('key');
+ *
+ * 剩余有效时间
+ * redisClient.ttl('key');
+ *
+ */

@@ -7,6 +7,8 @@ app.use(async (ctx) => {
   if (ctx.path === '/api/test' && ctx.method === 'GET') {
     // 在这里处理接口逻辑
     ctx.body = { message: 'This is a simple API test.' }
+    // ctx.status = 403
+    // ctx.body = 'no token'
   } else if (ctx.path === '/api/req' && ctx.method === 'POST') {
     ctx.status = 200
     ctx.body = {
