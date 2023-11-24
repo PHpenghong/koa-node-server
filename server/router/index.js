@@ -4,7 +4,8 @@ const appRouter = new Router({ prefix: '/api' })
 
 // 路由模块
 const moduleMap = {
-  other: require('./models/other')
+  other: require('./models/other'),
+  user: require('./models/user')
 }
 
 Object.keys(moduleMap).forEach((m) => {

@@ -1,6 +1,4 @@
-const Router = require('koa-router')
-
-const router = new Router()
+const router = new (require('koa-router'))()
 // const requestProxy = require('../server/request/request')
 const { reqAll, request, reqLock } = require('../server/request/index')
 

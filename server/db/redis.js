@@ -18,6 +18,7 @@ client.on('error', function (err) {
 
 client.connect()
 
+global.redisClient = client
 module.exports = client
 
 /**

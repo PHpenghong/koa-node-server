@@ -47,7 +47,12 @@ const verifyToken = (whiteUrl, userInfo = 'userInfo') => {
   return async function jwtMiddleware(ctx, next) {
     try {
       // 检查是否在白名单中
-      if (!whitelist.includes(ctx.path.replace('/api/', ''))) {
+      if (
+        !whitelist.some((route) =>
+          ctx.path.replace('/api/', '').startsWith(route)
+        )
+      ) {
+        console.log('in------=====')
         if (
           !ctx.headers.authorization ||
           !ctx.headers.authorization.startsWith('Bearer') ||
@@ -74,7 +79,6 @@ const verifyToken = (whiteUrl, userInfo = 'userInfo') => {
         ctx.state[userInfo] = decoded
       }
       // ctx.response.headers.newToken = '12345w'
-
       await next()
     } catch (err) {
       console.log('🚀 ~ file: index.js:80 ~ jwtMiddleware ~ err:', err)

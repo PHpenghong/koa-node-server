@@ -27,10 +27,20 @@ module.exports = function (portVal = 3000) {
   const { verifyToken } = require('./jwt/index')
   const { whileUrlJWT } = require('./utils/whileUrl')
 
+  require('./db/initSequelize')
+
   // 全局错误处理中间件
   koa.on('error', (err) => {
     console.error('Global error handler:', err.message)
     // 这里可以进行全局错误处理
+  })
+
+  koa.use(async (ctx, next) => {
+    await next()
+    if (ctx.status === 404) {
+      ctx.status = 404
+      ctx.body = '404 Not Found'
+    }
   })
 
   // 配置控制台日志中间件

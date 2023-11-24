@@ -1,10 +1,9 @@
-const Router = require('koa-router')
-const childRouter = require('../../../controllers/test')
+const { getCaptcha } = require('../../../controllers/otherController')
 
-const router = new Router()
+const router = new (require('koa-router'))()
 
-// router.get('/test', test)
+router.get('/captcha/:timer', getCaptcha)
 
-router.use(childRouter.routes())
+// router.use(childRouter.routes())
 
 module.exports = router
